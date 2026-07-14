@@ -14,7 +14,12 @@ export function Header() {
     <header className="border-b border-(--border) px-6 py-3">
       <nav className="flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-2">
+        <button
+          type="button"
+          className="flex cursor-pointer items-center gap-2"
+          onClick={() => void navigate('/')}
+          aria-label="Ir para a página inicial"
+        >
           <div className="bg-primary flex h-9 w-9 items-center justify-center rounded-full">
             <Wallet size={20} className="text-primary-foreground" />
           </div>
@@ -22,7 +27,7 @@ export function Header() {
             <span className="text-muted-foreground font-medium">Planej</span>
             <span className="font-extrabold">.ai</span>
           </span>
-        </div>
+        </button>
 
         {/* Actions Buttons */}
         <div className="flex items-center gap-1">

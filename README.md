@@ -6,6 +6,43 @@ Tudo funciona diretamente no navegador: sem backend, sem banco de dados remoto. 
 
 ---
 
+## Melhoria implementada — Histórico de Simulações (Desafio 1)
+
+Foi implementada a página `/historico` com:
+
+- Lista das simulações salvas no `localStorage` (mais recentes primeiro)
+- Resumo de cada simulação: meta, custo, prazo, economia mensal e se já há insight da IA
+- Botão **Ver detalhes**, que abre `/resultado/:id` (reutiliza o insight já gerado, sem nova chamada à API)
+- Botão **Excluir**, com confirmação antes de remover
+- Estado vazio com CTA para iniciar uma nova simulação
+- Data de criação (`createdAt`) gravada ao salvar novas simulações
+
+### Arquivos principais da melhoria
+
+- `src/hooks/useSimulationStorage.tsx` — `getAllSimulations` e `deleteSimulation`
+- `src/pages/HistoryPage.tsx` — página do histórico
+- `src/components/features/History/HistoryCard.tsx` — card de cada simulação
+- `src/components/features/History/HistoryList.tsx` — lista e estado vazio
+- `src/router.tsx` — rota `/historico` apontando para `HistoryPage`
+
+### Como testar
+
+1. Crie uma ou mais simulações pelo formulário em `/`
+2. Aguarde o diagnóstico na página de resultado (ou volte depois)
+3. Clique em **Histórico** no header
+4. Use **Ver detalhes** para reabrir uma simulação
+5. Use **Excluir** e confirme a remoção
+
+### Como executar
+
+```bash
+pnpm install
+# Crie um arquivo .env com VITE_GEMINI_API_KEY=sua_chave
+pnpm dev
+```
+
+---
+
 ## Stacks do Projeto
 
 ### Dependências de produção
@@ -49,6 +86,9 @@ planejai/
 │   │       └── piggy-bank.png  # Imagem ilustrativa (hero)
 │   ├── components/
 │   │   ├── features/
+│   │   │   ├── History/        # Componentes da página de histórico
+│   │   │   │   ├── HistoryCard.tsx
+│   │   │   │   └── HistoryList.tsx
 │   │   │   ├── Insights/       # Componentes de exibição dos insights da IA
 │   │   │   │   ├── Content.tsx
 │   │   │   │   └── Error.tsx
@@ -80,6 +120,7 @@ planejai/
 │   │   ├── useSimulationStorage.tsx  # Hook de leitura/escrita no localStorage
 │   │   └── useTheme.tsx           # Hook de acesso ao contexto de tema
 │   ├── pages/
+│   │   ├── HistoryPage.tsx           # Página de histórico de simulações
 │   │   ├── SimulationFormPage.tsx    # Página do formulário
 │   │   └── SimulationResultsPage.tsx # Página de resultados
 │   ├── services/
@@ -2475,6 +2516,8 @@ Envie os insights via props na chamada do componente:
 ## Desafios
 
 ### Desafio 1 — Página de Histórico de Simulações
+
+> **Status:** implementado nesta entrega (veja a seção [Melhoria implementada](#melhoria-implementada--histórico-de-simulações-desafio-1) no início do README).
 
 - Exiba um resumo de cada simulação salva
 - Crie um layout responsivo seguindo o protótipo
